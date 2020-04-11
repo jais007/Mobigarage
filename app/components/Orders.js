@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { TouchableOpacity, View ,Button,Text,StyleSheet} from 'react-native';
+import { Container,Header,Content, Body, Icon,} from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 export default class Orders extends React.Component {
   static navigationOptions={
+    drawerLabel: 'Booking History',
     drawerIcon: () => (
-    <Ionicons name="md-history" size={25} color="black"/>
+    <Icon name="md-refresh" size={25} color="black"/>
   ),
   };
     render(){

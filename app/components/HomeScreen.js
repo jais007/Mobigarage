@@ -26,7 +26,8 @@ export default class HomeScreen extends React.Component {
              </Item>
             </View>
             <Right>
-            <Icon name="md-cart" style={{color:'white'}} />
+            <Icon name="md-cart" style={{color:'white'}}    
+            onPress={() => this.props.navigation.navigate('Cart')}/>
             </Right>
          </Header>
           <Content style={{backgroundColor:'#d5d5d6', marginTop:20}}>
