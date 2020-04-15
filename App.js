@@ -7,35 +7,39 @@ import { DrawerItems,
         createAppContainer,
         createSwitchNavigator,
         createBottomTabNavigator} from 'react-navigation'
-import HomeScreen from './app/components/HomeScreen';
-import ProfileScreen from './app/components/ProfileScreen';
-import Orders from './app/components/Orders';
-import Notification from './app/components/Notification';
-import Logout from './app/components/Logout';
-import { Ionicons } from '@expo/vector-icons';
-
-import EditProfile from './app/components/EditProfile'
-import Address from './app/components/Address'
+import HomeScreen from './app/screen/HomeScreen';
+import ProfileScreen from './app/screen/ProfileScreen';
+import Orders from './app/screen/Orders';
+import Notification from './app/screen/Notification';
+import Logout from './app/screen/Logout';
+import EditProfile from './app/screen/EditProfile'
+import {Box} from 'react-native-design-utility'
+import Address from './app/screen/Address'
 import { Container,Header,Content, Body, Icon,Button} from 'native-base';
+import BrandScreen from './app/screen/BrandScreen';
+import NavigationService from './app/services/NavigationService'
+import ProductScreen from './app/screen/ProductScreen'
 
-export default class App extends Component {
-  render() {
-    return (
-      <AppSwitchContainer/>
-    );
-  }
+const profileheader={
+  headerStyle:{
+    backgroundColor: '#3a455c'
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 }
 class WelcomeScreen extends Component {
   render() {
     return (
-       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+       <Box f={1} center>
           <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('Dashboard')}>
             <Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Login</Text>
           </Button>
           <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('Welcome')}>
             <Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Sign Up</Text>
           </Button>
-       </View>
+       </Box>
     );
   }
 }
@@ -43,8 +47,8 @@ class WelcomeScreen extends Component {
 
 const ProfileStack=createStackNavigator({
   Profile:{
-    screen:ProfileScreen,
-    navigationOptions:({navigation})=>{
+      screen:ProfileScreen,
+      navigationOptions:({navigation})=>{
       return {
         headerLeft:<Icon name="md-menu" style={{color:'white',marginLeft:10}} onPress={()=>navigation.toggleDrawer()}/>,
         headerStyle:{
@@ -57,29 +61,22 @@ const ProfileStack=createStackNavigator({
        }
     }
   },
+
   EditProfile:{
     screen:EditProfile,
-    navigationOptions:({navigation})=>{
-      return {
-          headerStyle:{
-          backgroundColor: '#3a455c',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-       }
-    }
+    navigationOptions:{...profileheader},
+
   }
 })
 const ProfiletTabNavigator=createBottomTabNavigator({
   Profile:{
-    screen:ProfileStack,
-    navigationOptions: {
-      tabBarLabel: 'Profile',
-      tabBarIcon: () =><Icon name="md-person" size={25} style={{fontSize: 20,paddingTop:5}}/>
-    }
+      screen:ProfileStack,
+       navigationOptions: {
+        tabBarLabel: 'Profile',
+        tabBarIcon: () =><Icon name="md-person" size={25} style={{fontSize: 20,paddingTop:5}}/>
+      }
   },
+  
   Address:{
     screen:Address,
     navigationOptions: {
@@ -106,7 +103,7 @@ const ProfiletTabNavigator=createBottomTabNavigator({
 
 const ProfileStackNavigator=createStackNavigator({
  ProfiletTabNavigator:{
-   screen:ProfiletTabNavigator,
+    screen:ProfiletTabNavigator,
 }
 },{
   defaultNavigationOptions:({navigation})=>{
@@ -129,9 +126,37 @@ const CustomDrawerContentComponent=(props)=>(
       </Content>
   </Container>
 )
-
+const BrandStack=createStackNavigator({
+  Brand:{
+    screen:BrandScreen,
+  },
+  Product:{
+    screen:ProductScreen,
+    navigationOptions:{...profileheader},
+    }
+})
+const HomeStack=createStackNavigator({
+  Home:{
+    screen:HomeScreen,
+     navigationOptions: {
+       header:null,
+      tabBarLabel: 'Home',  
+      tabBarIcon: () =>  <Icon name="md-home" size={25} style={{fontSize: 20,paddingTop:5}}/>
+    },
+  },
+  Brand:{
+    screen:BrandScreen,
+    navigationOptions:{...profileheader},
+    }
+})
 const AppDrawerNavigator=createDrawerNavigator ({
-  Home:HomeScreen,
+  Home:{
+    screen:HomeStack,
+    navigationOptions: {
+      drawerLabel: 'Home',
+      drawerIcon: () =><Icon name="md-home" size={25} style={{fontSize: 20,paddingTop:5}}/>
+    }
+  },
   Profile:{
     screen:ProfileStackNavigator,
     navigationOptions: {
@@ -145,9 +170,6 @@ const AppDrawerNavigator=createDrawerNavigator ({
 },{
     initialRouteName:'Home',
     contentComponent:CustomDrawerContentComponent,
-     drawerOpenRoute:'DrawerOpen',
-     drawerOpenRoute:'DrawerClose',
-     drawerOpenRoute:'Drawertoggle',
 })
 
 const AppSwitchNavigator=createSwitchNavigator({
@@ -155,7 +177,20 @@ const AppSwitchNavigator=createSwitchNavigator({
   Dashboard:AppDrawerNavigator,
 })
 
-const AppSwitchContainer=createAppContainer(AppSwitchNavigator);
+ const AppNavigator=createAppContainer(AppSwitchNavigator);
+
+export default class App extends Component {
+  render() {
+    return (
+      <AppNavigator
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
+    );
+  }
+}
+
 
 const styles = StyleSheet.create({
   container: {
