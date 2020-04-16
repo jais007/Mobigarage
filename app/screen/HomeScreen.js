@@ -4,39 +4,7 @@ import {Icon,Input ,Item,Header,Container,Content,Right,Left} from 'native-base'
 import {Box,UtilityThemeProvider,Text} from 'react-native-design-utility'
 import Swiper from 'react-native-swiper'
 import BrandCard from '../component/Brandcard';
-
-const brands =[
-  {
-    id:1,
-    brand:'Apple',
-    image:require('../img/iphone-logo.jpg'),
-  },
-  {
-    id:2,
-    brand:'Samsung',
-    image:require('../img/samsung-logo.jpg'),
-  },
-  {
-    id:3,
-    brand:'MI',
-    image:require('../img/mi-logo.jpg'),
-  },
-  {
-    id:4,
-    brand:'Vivo',
-    image:require('../img/vivo-logo.jpg'),
-  },
-  {
-    id:5,
-    brand:'Oppo',
-    image:require('../img/oppo-logo.jpg'),
-  },
-  {
-    id:6,
-    brand:'OnePlus',
-    image:require('../img/oneplus-logo.jpg'),
-  },
-]
+import {BRANDS} from '../shared/Goods';
 
 const NUM_COL=3;
 export default class HomeScreen extends React.Component {
@@ -113,7 +81,7 @@ export default class HomeScreen extends React.Component {
          
           <Box f={1}>
             <FlatList 
-             data={brands}
+             data={BRANDS}
              renderItem={this.renderItem}
              keyExtractor={this.keyExtractor}
              numColumns={NUM_COL} 

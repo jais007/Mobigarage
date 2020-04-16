@@ -18,6 +18,7 @@ class BrandCard extends Component {
                     <Image source={image} style={{height:100,weight:100,resizeMode:'contain'}}
                     />
                 </Box>
+                
             </Box>
             </TouchableOpacity>
         )

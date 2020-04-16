@@ -18,7 +18,7 @@ import Address from './app/screen/Address'
 import { Container,Header,Content, Body, Icon,Button} from 'native-base';
 import BrandScreen from './app/screen/BrandScreen';
 import NavigationService from './app/services/NavigationService'
-import ProductScreen from './app/screen/ProductScreen'
+import ModelScreen from './app/screen/ModelScreen'
 
 const profileheader={
   headerStyle:{
@@ -129,11 +129,25 @@ const CustomDrawerContentComponent=(props)=>(
 const BrandStack=createStackNavigator({
   Brand:{
     screen:BrandScreen,
+     navigationOptions: {
+     
+    },
   },
-  Product:{
-    screen:ProductScreen,
-    navigationOptions:{...profileheader},
+  Model:{
+    screen:ModelScreen,
     }
+},{
+    defaultNavigationOptions:{
+            header:null,
+            headerStyle:{
+              backgroundColor: '#3a455c'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          
+      }
 })
 const HomeStack=createStackNavigator({
   Home:{
@@ -145,9 +159,31 @@ const HomeStack=createStackNavigator({
     },
   },
   Brand:{
-    screen:BrandScreen,
-    navigationOptions:{...profileheader},
+    screen:BrandStack,
+    navigationOptions:{
+      // header:null,
+      headerStyle: {
+        backgroundColor: '#3a455c',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     }
+  }
+},{
+  navigationOptions:({navigation})=>{
+    return {
+      header:null,
+      headerStyle: {
+        backgroundColor: '#3a455c',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }
+  }
 })
 const AppDrawerNavigator=createDrawerNavigator ({
   Home:{
