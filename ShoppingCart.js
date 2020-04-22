@@ -22,6 +22,7 @@ import NavigationService from './app/services/NavigationService'
 import ModelScreen from './app/screen/ModelScreen'
 import ShoppingCartIcon from './app/screen/ShoppingCartIcon'
 import CartScreen from './app/screen/CartScreen';
+import SelectAddress from './app/screen/SelectAddress';
 
 const profileheader={
   headerStyle:{
@@ -149,6 +150,7 @@ const HomeStack=createStackNavigator({
   Brand:BrandScreen,
   Model:ModelScreen,
   Cart:CartScreen,
+  SelectAddress:SelectAddress,
 },{
   defaultNavigationOptions:{
     headerRight:<ShoppingCartIcon/>,

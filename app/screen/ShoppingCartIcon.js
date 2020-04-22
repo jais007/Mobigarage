@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Platform,TouchableOpacity,
 } from "react-native";
-
+import NavigationService from '../services/NavigationService';
 import { withNavigation } from 'react-navigation'
 
 import { connect } from 'react-redux'
@@ -20,7 +20,7 @@ class ShoppingCartIcon extends Component{
             right: 15, bottom:25 , alignItems: 'center', justifyContent: 'center', zIndex: 2000,
 
         }}>
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>{this.props.cartItems.length}</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>{this.props.cartItems.data.length}</Text>
         </View>
         <TouchableOpacity  onPress={() => this.props.navigation.navigate('Cart')}>
         <Icon style={{color:'#fff'}} name="md-cart" size={30} />

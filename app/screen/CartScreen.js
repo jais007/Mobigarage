@@ -7,7 +7,7 @@ import {
 import { Box } from 'react-native-design-utility'
 import { connect } from 'react-redux'
 import { Left, Right,Container,Content,Item,Body,Card, CardItem} from "native-base";
-
+import NavigationService from '../services/NavigationService';
 class CartScreen extends Component {
     static navigationOptions = ({ navigation }) => ({
         title:`My Cart`,
@@ -24,6 +24,17 @@ class CartScreen extends Component {
                 <Box f={1} center>
                     <Text style={{fontSize:18}}>{item.problemname}</Text>
                     <Text  style={{fontSize:14}}>{item.ModelName}</Text>
+                    <TouchableOpacity style={styles.rmvbtn}
+                        onPress={()=>this.props.removeItem({
+                            id:item.id,
+                            problemname: item.problemname,
+                            price: item.price,
+                            image: item.image,
+                            ModelImage: item.ModelImage,
+                            ModelName: item.ModelName
+                        })}>
+                    <Text style={{fontSize:15,color:'#fff'}} >Remove</Text>
+                    </TouchableOpacity>
                 </Box>
                 <Right>
                 <Text style={{fontSize:15,fontWeight:'bold'}}>{'\u20B9'}{item.price}</Text>
@@ -36,18 +47,28 @@ class CartScreen extends Component {
     }
     keyExtractor = (item) => String(item.id);
     separator = () => { }
+    checkout =()=>{
+        NavigationService.navigate('SelectAddress');
+    };
     render() {
         console.log(this.props.cartItems)
         return (
             <CardItem style={styles.container}>
-                {this.props.cartItems.length == 0 ? <Text>No items in your cart</Text> :
+                {this.props.cartItems.data.length == 0 ? <Text>No items in your cart</Text> :
                     <Box f={1}>
                         <FlatList
-                            data={this.props.cartItems}
+                            showsVerticalScrollIndicator={false}
+                            data={this.props.cartItems.data}
                             renderItem={this.renderItem}
                             keyExtractor={this.keyExtractor}
                         />
-                        <TouchableOpacity style={styles.btn}>
+                        <View >
+                        <Text style={{fontSize:18,fontWeight:"bold",padding:10,
+                         marginHorizontal:20}}>Total Payable Amount :  
+                           {'   \u20B9'}{this.props.cartItems.totalPrice}
+                           </Text>
+                        </View>
+                        <TouchableOpacity style={styles.checkoutbtn} onPress={this.checkout}>
                             <Text style={styles.textstyle}>CheckOut</Text>
                         </TouchableOpacity>
                         <View style={{marginBottom:10}}></View>
@@ -63,7 +84,14 @@ const mapStateToProps = (state) => {
         cartItems: state
     }
 }
-export default connect(mapStateToProps)(CartScreen);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        removeItem: (DATA) => dispatch({ type: 'REMOVE_FROM_CART', payload: DATA })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);
 
 const styles = StyleSheet.create({
     container: {
@@ -79,7 +107,7 @@ const styles = StyleSheet.create({
         maxWidth:75,
         resizeMode: 'contain',
     },
-    btn:{
+    checkoutbtn:{
         backgroundColor:'#33c37d',
         alignItems:'center',
         justifyContent:'center',
@@ -92,5 +120,13 @@ const styles = StyleSheet.create({
         fontSize:18,
         color:'white',
         fontWeight:"bold",
-    }
+    },
+    rmvbtn:{
+        backgroundColor:'#33c37d',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingHorizontal:10,
+        borderRadius:5,
+        paddingVertical:5,
+    },
 });
