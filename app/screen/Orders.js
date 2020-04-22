@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { TouchableOpacity, View ,Button,Text,StyleSheet} from 'react-native';
-import { Container,Header,Content, Body, Icon,} from 'native-base';
+import { Container,Header,Content, Body, Icon,Left,Right,Item,Input} from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import {Box,UtilityThemeProvider} from 'react-native-design-utility'
 export default class Orders extends React.Component {
-  static navigationOptions={
+  static navigationOptions =({navigation})=>({
     drawerLabel: 'Booking History',
     drawerIcon: () => (
     <Icon name="md-refresh" size={25} color="black"/>
   ),
-  };
+});
     render(){
       return (
-        <View style={styles.container}>
-          <Text style={{color:'#fff',fontSize:20}}>Orders Page</Text>
+
+        <Box f={1} center>
+          <Text style={{fontSize:20}}>Orders Page</Text>
         <Button
           onPress={() => this.props.navigation.goBack()}
           title="Go back home"
         />
-        </View>
+        </Box>
       );
     }
   }
@@ -25,7 +27,7 @@ export default class Orders extends React.Component {
     container:{
       flex:1,
       justifyContent:'center',
-      backgroundColor: '#ff6347',
+      backgroundColor: '#fff',
       alignItems:'center'
     },
     button:{

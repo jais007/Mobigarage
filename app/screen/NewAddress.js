@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 // create a component
-class ProductScreen extends Component {
+class NewAddress extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>ProductScreen</Text>
+                <Text>NewAddress</Text>
             </View>
         );
     }
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default ProductScreen;
+export default NewAddress;

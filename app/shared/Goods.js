@@ -5,15 +5,55 @@ export const BRANDS=[
      image:require('../img/logo/iphone-logo.jpg'),
      MODELS: [
         {
-        id:101,
-        Model: 'Iphone-11',
-        image:require('../img/Models/iphone-11.jpg'),
+          id:101,
+          Model: 'iPhone-11',
+          image:require('../img/Models/iphone-11.jpg'),
+          problems:
+          [
+            {
+              id:1001,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'11000',
+            },
+            {
+              id:1002,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:1003,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
         },
         {
           id:102,
-          Model: 'Iphone-7',
+          Model: 'iPhone-7',
           image:require('../img/Models/iphone-7.png'),
-        },
+          problems :
+          [
+             {
+              id:1021,
+               problemname:'SCREEN',
+               image:require('../img/problems/screen.png'),
+               price:'9000',
+             },
+             {
+              id:1022,
+               problemname:'MIC',
+               image:require('../img/problems/mic.png'),
+               price:'499',
+             },{
+              id:1023,
+               problemname:'RECEIVER',
+               image:require('../img/problems/receiver.png'),
+               price:'799',
+             }
+           ]
+        }
       ]
   },
   {
@@ -23,29 +63,110 @@ export const BRANDS=[
       MODELS: [
          {
          id:201,
-         Model: 'J6',
+         Model: 'Samsung J6',
          image:require('../img/Models/j6.png'),
+         problems :
+         [
+            {
+              id:2011,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'6000',
+            },
+            {
+              id:2012,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'499',
+            },{
+              id:2013,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'699',
+            }
+          ]
          },
          {
            id:202,
-           Model: 'J8',
+           Model: 'Samsung J8',
            image:require('../img/Models/j8.png'),
+           problems :
+            [
+            {
+              id:2021,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'8000',
+            },
+            {
+              id:2022,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:2023,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
          },
        ]
-   },{
+   },
+   {
     id:3,
-    brand:'MI',
+    brand:'Mi',
     image:require('../img/logo/mi-logo.jpg'),
     MODELS: [
        {
        id:301,
        Model: 'Redmi Note 7',
        image:require('../img/Models/redmi-note7.png'),
+       problems :
+         [
+            {
+              id:3010,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'11000',
+            },
+            {
+              id:3011,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:3012,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
        },
        {
          id:302,
          Model: 'Redmi Note 5',
          image:require('../img/Models/redmi-note5.png'),
+         problems :
+         [
+            {
+              id:3021,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'11000',
+            },
+            {
+              id:3022,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:3023,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
        },
      ]
   },
@@ -58,11 +179,51 @@ export const BRANDS=[
            id:401,
            Model: 'Vivo V7',
            image:require('../img/Models/vivo-V7.jpg'),
+           problems :
+           [
+              {
+                id:4011,
+                problemname:'SCREEN',
+                image:require('../img/problems/screen.png'),
+                price:'11000',
+              },
+              {
+                id:4012,
+                problemname:'MIC',
+                image:require('../img/problems/mic.png'),
+                price:'599',
+              },{
+                id:4013,
+                problemname:'RECEIVER',
+                image:require('../img/problems/receiver.png'),
+                price:'899',
+              }
+            ]
            },
            {
              id:402,
              Model: 'Vivo Y93',
              image:require('../img/Models/vivo-Y93.png'),
+             problems :
+         [
+            {
+              id:4021,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'11000',
+            },
+            {
+              id:4022,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:4023,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
            },
          ]
      },
@@ -76,11 +237,51 @@ export const BRANDS=[
        id:501,
        Model: 'Oppo A37',
        image:require('../img/Models/oppo-A37.jpg'),
+       problems :
+       [
+          {
+            id:5011,
+            problemname:'SCREEN',
+            image:require('../img/problems/screen.png'),
+            price:'11000',
+          },
+          {
+            id:5012,
+            problemname:'MIC',
+            image:require('../img/problems/mic.png'),
+            price:'599',
+          },{
+            id:5013,
+            problemname:'RECEIVER',
+            image:require('../img/problems/receiver.png'),
+            price:'899',
+          }
+        ]
        },
        {
          id:502,
          Model: 'Oppo F9',
          image:require('../img/Models/oppo-F9.jpg'),
+         problems :
+         [
+            {
+              id:5021,
+              problemname:'SCREEN',
+              image:require('../img/problems/screen.png'),
+              price:'11000',
+            },
+            {
+              id:5022,
+              problemname:'MIC',
+              image:require('../img/problems/mic.png'),
+              price:'599',
+            },{
+              id:5023,
+              problemname:'RECEIVER',
+              image:require('../img/problems/receiver.png'),
+              price:'899',
+            }
+          ]
        },
      ]
  },
@@ -93,11 +294,51 @@ export const BRANDS=[
      id:601,
      Model: 'One Plus 5',
      image:require('../img/Models/oneplus5.png'),
+     problems :
+     [
+        {
+          id:6011,
+          problemname:'SCREEN',
+          image:require('../img/problems/screen.png'),
+          price:'11000',
+        },
+        {
+          id:6012,
+          problemname:'MIC',
+          image:require('../img/problems/mic.png'),
+          price:'599',
+        },{
+          id:6013,
+          problemname:'RECEIVER',
+          image:require('../img/problems/receiver.png'),
+          price:'899',
+        }
+      ]
      },
      {
        id:602,
        Model: 'One Plus 6',
        image:require('../img/Models/oneplus6.png'),
+       problems :
+       [
+          {
+            id:6021,
+            problemname:'SCREEN',
+            image:require('../img/problems/screen.png'),
+            price:'11000',
+          },
+          {
+            id:6022,
+            problemname:'MIC',
+            image:require('../img/problems/mic.png'),
+            price:'599',
+          },{
+            id:6023,
+            problemname:'RECEIVER',
+            image:require('../img/problems/receiver.png'),
+            price:'899',
+          }
+        ]
      },
    ]
 },

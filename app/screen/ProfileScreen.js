@@ -6,14 +6,16 @@ import {UtilityThemeProvider,Box,Text} from 'react-native-design-utility'
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions={
+    headerTitle:'My Account',
     drawerIcon: () => (
       <Icon name="md-home" size={25} style={{fontSize: 20,paddingTop:5}}/>
   ),
+ 
   };
     render() {
       return (
        <Container>
-            <Header style={{backgroundColor:'#3a455c',height:170,borderBottomColor:'#757575',marginTop:0}}>
+            <Header style={{backgroundColor:'#3a455c',height:140,borderBottomColor:'#757575',marginTop:0}}>
             <Body  style={{flex:1,alignContent:'center',flexDirection:'row',justifyContent:'center'}}>
               <View style={styles.iconcontainer}>
                 <Icon name='md-person' style={{fontSize:64,color:'#3a455c'}}/>
@@ -33,7 +35,8 @@ export default class ProfileScreen extends React.Component {
             <Content contentContainerStyle={{flex:1,
               alignItems:'center',justifyContent:'center'}}>
             <Text>Profile Screen</Text>
-            <Button bordered light  onPress={() => this.props.navigation.navigate('EditProfile')}>
+            <Button bordered style={{padding:20,margin:4,borderRadius:4}} 
+            onPress={() => this.props.navigation.navigate('EditProfile')}>
             <Text>Edit Profile</Text>
             </Button>
           

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View ,StyleSheet,Image, Dimensions,TouchableOpacity,FlatList,StatusBar} from 'react-native';
+import {View ,StyleSheet,Image, Dimensions,TouchableOpacity,FlatList,SafeAreaView} from 'react-native';
 import {Icon,Input ,Item,Header,Container,Content,Right,Left} from 'native-base'
 import {Box,UtilityThemeProvider,Text} from 'react-native-design-utility'
 import Swiper from 'react-native-swiper'
@@ -9,7 +9,7 @@ import {BRANDS} from '../shared/Goods';
 const NUM_COL=3;
 export default class HomeScreen extends React.Component {
   static navigationOptions={
-    drawerIcon: () => (
+     drawerIcon: () => (
       <Icon name="md-home" size={25} style={{fontSize: 20,paddingTop:5}}/>
   ),
   };
@@ -31,22 +31,6 @@ export default class HomeScreen extends React.Component {
     render() {
       return (
        <Box f={1}>
-         <Header style={{backgroundColor:'#3a455c',height:70,borderBottomColor:'#757575',marginTop:0}}>
-           <Left>
-              <Icon name="md-menu" style={{color:'white'}} onPress={()=>this.props.navigation.toggleDrawer()}/>
-            </Left>
-            <View style={{flex:1, marginLeft:5, 
-               height:"100%", justifyContent:"center",marginLeft:5}}>
-             <Item style={{backgroundColor:'white',width:200,
-                paddingHorizontal:10,borderRadius:4}}>
-                 <Icon name="md-search" size={25} style={{fontSize: 20,paddingTop:5}}/>
-               <Input placeholder="search"/>
-             </Item>
-            </View>
-            <Right>
-            <Icon name="md-cart" style={{color:'white'}} onPress={()=>this.props.navigation.navigate("Cart")}/>
-            </Right>
-         </Header>
           <Content style={{backgroundColor:'#d5d5d6', marginTop:20}}>
             <Swiper 
               autoplay={true} showsButtons={true} style={{height:180}}>
@@ -54,7 +38,7 @@ export default class HomeScreen extends React.Component {
                 <Image
                  resizeMode="stretch"
                  style={styles.image}
-                source={require('../img/Swipe_1.png')}
+                 source={require('../img/Swipe_1.png')}
                 />
               </View>
               <View style={{flex:1}}>
@@ -74,12 +58,10 @@ export default class HomeScreen extends React.Component {
                 />
               </View>
             </Swiper>
-            <View style={{backgroundColor:'white',paddingHorizontal:5,alignItems:'center',height:40}}>
-             <Text style={{fontSize:18,marginTop:5}}>Choose Your Mobile Brand</Text>
+            <View style={{backgroundColor:'#71B7F9',paddingHorizontal:5,alignItems:'center',height:40}}>
+             <Text style={{fontSize:18,marginTop:5,fontWeight:'bold',color:'#fff'}}>Choose Your Mobile Brand</Text>
             </View >
-            </Content>
-         
-          <Box f={1}>
+            <SafeAreaView f={1}>
             <FlatList 
              data={BRANDS}
              renderItem={this.renderItem}
@@ -87,7 +69,9 @@ export default class HomeScreen extends React.Component {
              numColumns={NUM_COL} 
              ItemSeparatorComponent={this.separator}
             />
-          </Box>   
+          </SafeAreaView>  
+            </Content>
+          
        </Box>
       );
     }
@@ -109,6 +93,7 @@ export default class HomeScreen extends React.Component {
     },
     image: {
       width:Dimensions.get('window').width,
+      height:180,
       flex: 1
     },
   });

@@ -17,23 +17,22 @@ class BrandScreen extends Component {
     }
     return (
       <Box w={1/ NUM_COL} bg="white" h={200} style={style}>
-        <ModelCard {...item}/>
+        <ModelCard key={index} {...item}/>
       </Box>
     )
   }
   keyExtractor=(item)=> String(item.id);
   separator =()=><Box h={2} bg="#F5F5F5"/>
     render() {
-      
         const { navigation } = this.props;
-        const brandname = navigation.getParam('name', 'NO-ID');
-        const model = BRANDS.find( ({ brand }) => brand == brandname );
+         const brandname = navigation.getParam('name', 'NO-ID');
+         const SelectedBrandObj = navigation.getParam('ModelObj', 'Model-Obj');
         return(
               
         <Box f={1}>
             
             <FlatList 
-             data={model.MODELS}
+             data={SelectedBrandObj}
              renderItem={this.renderItem}
              keyExtractor={this.keyExtractor}
              numColumns={NUM_COL} 
@@ -45,7 +44,7 @@ class BrandScreen extends Component {
 
 }
 
-// define your styles
+export default BrandScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -55,5 +54,4 @@ const styles = StyleSheet.create({
     },
 });
 
-//make this component available to the app
-export default BrandScreen;
+
