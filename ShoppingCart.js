@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet,Image} from 'react-native';
+import { View, Text, StyleSheet,Image, Alert} from 'react-native';
 import { Container,Header,Content, Body, Icon,Button} from 'native-base';
 import { DrawerItems,
         createStackNavigator,
@@ -11,7 +11,7 @@ import { DrawerItems,
 import HomeScreen from './app/screen/HomeScreen';
 import ProfileScreen from './app/screen/ProfileScreen';
 import Orders from './app/screen/Orders';
-import Notification from './app/screen/Notification';
+import { Ionicons } from '@expo/vector-icons';
 import Logout from './app/screen/Logout';
 import EditProfile from './app/screen/EditProfile'
 import {Box} from 'react-native-design-utility'
@@ -23,7 +23,9 @@ import ModelScreen from './app/screen/ModelScreen'
 import ShoppingCartIcon from './app/screen/ShoppingCartIcon'
 import CartScreen from './app/screen/CartScreen';
 import SelectAddress from './app/screen/SelectAddress';
-
+import LoginScreen from './app/screen/LoginScreen'
+import SignUp from './app/screen/SignUpScreen'
+import firebase from './app/Config'
 const profileheader={
   headerStyle:{
     backgroundColor: '#3a455c'
@@ -33,14 +35,15 @@ const profileheader={
     fontWeight: 'bold',
   },
 }
+
 class WelcomeScreen extends Component {
   render() {
     return (
        <Box f={1} center>
-          <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('Dashboard')}>
+          <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('Login')}>
             <Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Login</Text>
           </Button>
-          <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('Welcome')}>
+          <Button block light style={styles.btn} onPress={()=>this.props.navigation.navigate('SignUp')}>
             <Text style={{fontSize:16,color:'white',fontWeight:'bold'}}>Sign Up</Text>
           </Button>
        </Box>
@@ -52,6 +55,7 @@ class WelcomeScreen extends Component {
 const ProfileStack=createStackNavigator({
   Profile:{
       screen:ProfileScreen,
+
       navigationOptions:({navigation})=>{
       return {
         ...profileheader,
@@ -66,50 +70,47 @@ const ProfileStack=createStackNavigator({
   }
 })
 const Addressstack=createStackNavigator({
-  Address:Address,
+  Address:{
+    screen:Address,
+  },
   NewAddress:NewAddress,
-},{
+},
+  {
     defaultNavigationOptions:{
       ...profileheader,
-     }
+  },
+ 
 })
-const ProfiletTabNavigator=createBottomTabNavigator({
+const ProfileTabNavigator=createBottomTabNavigator({
   Profile:{
       screen:ProfileStack,
        navigationOptions: {
         tabBarLabel: 'Profile',
-        tabBarIcon: () =><Icon name="md-person" size={25} style={{fontSize: 20,paddingTop:5}}/>
-      }
-  },
-  
+        tabBarIcon: () =><Icon name="md-person" size={25} style={{fontSize: 20,paddingTop:5}}/>,
+      },
+  }, 
   Address:{
     screen:Addressstack,
     navigationOptions: {
       tabBarLabel: 'Saved Address',
-     
       tabBarIcon: () =><Icon name="md-bookmark" size={25} style={{fontSize: 20,paddingTop:5}}/>
-    }
+    },
+  
   },
-},{
-  navigationOptions:({navigation})=>{
-    const {routeName}=navigation.state.routes[navigation.state.index]
-    return {
-      header:null,
-      // headerTitle: routeName,
-      // headerStyle: {
-      //   backgroundColor: '#3a455c',
-      // },
-      // headerTintColor: '#fff',
-      // headerTitleStyle: {
-      //   fontWeight: 'bold',
-      // },
-    }
-  }
-})
+},
+ {
+    navigationOptions:({navigation})=>{
+      const {routeName}=navigation.state.routes[navigation.state.index]
+      return {
+        header:null,
+      }
+    },
+   }
+ )
 
 const ProfileStackNavigator=createStackNavigator({
  ProfiletTabNavigator:{
-    screen:ProfiletTabNavigator,
+    screen:ProfileTabNavigator,
 }
 },{
   defaultNavigationOptions:({navigation})=>{
@@ -122,15 +123,11 @@ const ProfileStackNavigator=createStackNavigator({
 const CustomDrawerContentComponent=(props)=>(
   <Container>
       <Header style={{height:130,backgroundColor:'#3a455c',marginTop:0}}>
-        <View style={{flex:1,flexDirection:'row'}}>
-        <View style={{flex:1}}>
-        <Image name='person' style={styles.dImage}
-             source={require('./app/img/profile-image.jpg')}/>
-        </View>
-        <View style={{flex:2}}>
-        <Text style={{fontSize:15,color:'#fff',justifyContent:'center',alignItems:'center'}}>Hi, Abhishek</Text>
-         <Text style={{fontSize:13,color:'#fff',justifyContent:'center',alignItems:'center'}}>abhishek@gmail.com</Text>
-        </View>
+        <View style={{flex:1,flexDirection:'row',justifyContent:'center',
+                alignItems:'center', }}>
+            <View style={styles.iconcontainer}>
+                <Icon name='md-person' style={{fontSize:64,color:'#3a455c'}}/>
+            </View>
         </View>
       </Header>
       <Content>
@@ -180,21 +177,47 @@ const AppDrawerNavigator=createDrawerNavigator ({
       drawerIcon: () =><Icon name="md-person" size={25} style={{fontSize: 20,paddingTop:5}}/>
     }
   },
-  Orders:Orders,
-  Notification:Notification,
+   Orders:Orders,
+  Logout:{
+    screen:Logout,
+    navigationOptions: {
+      drawerLabel: 'Logout',
+      drawerIcon: () =><Ionicons name="ios-power"  size={25} style={{fontSize: 20,paddingTop:5}}/>
+      
+    }
+  },
 },{
     initialRouteName:'Home',
-    contentComponent:CustomDrawerContentComponent,
+    contentComponent:(
+      CustomDrawerContentComponent
+    )
 })
 
 const AppSwitchNavigator=createSwitchNavigator({
   Welcome:WelcomeScreen,
+  Login:LoginScreen,
+  SignUp:SignUp,
   Dashboard:AppDrawerNavigator,
 })
-
  const AppNavigator=createAppContainer(AppSwitchNavigator);
 
 export default class ShoppingCart extends Component {
+  state={
+    email:"",
+    name:"",
+    password:""
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(user=>{
+        if(user){
+            this.setState({
+                email:user.email,
+                name:user.name
+            })
+        }
+      
+    })
+}
   render() {
     return (
       <AppNavigator
@@ -214,16 +237,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2c3e50',
   },
-  dImage:{
-    height:100,
-    width:100,
-    borderRadius:50, 
+  dtext:{
+     fontSize:15,
+     justifyContent:'center',
+     alignItems:'center', 
+     color:'#fff',
   },
   btn:{
     padding:10,
     margin:10,
     backgroundColor:'#273746',
     borderRadius:4
+  },
+  iconcontainer:{
+    backgroundColor:'white',
+    width:100,
+    height:100,
+    borderRadius:50, 
+    justifyContent:'center',
+    alignItems:'center', 
+    color: 'white',
+    margin:10
   }
 });
 

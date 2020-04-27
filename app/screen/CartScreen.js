@@ -48,7 +48,8 @@ class CartScreen extends Component {
     keyExtractor = (item) => String(item.id);
     separator = () => { }
     checkout =()=>{
-        NavigationService.navigate('SelectAddress');
+        NavigationService.navigate('SelectAddress',{Item:this.props.cartItems.data,
+            Quantity:this.props.cartItems.data.length,Amount:this.props.cartItems.totalPrice});
     };
     render() {
         console.log(this.props.cartItems)

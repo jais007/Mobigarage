@@ -1,10 +1,33 @@
 //import liraries
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, StyleSheet, Alert } from 'react-native'
+import { Image, TouchableHighlight , StyleSheet, Alert } from 'react-native'
 import { Box, Text } from 'react-native-design-utility'
+import {connect} from 'react-redux'
 import { Button, Left, Right, Card, CardItem, View } from 'native-base';
 class ProblemCart extends Component {
-    render() {
+    state={
+        isAdded:false,
+    }
+     handle=()=>{
+        let isInCart=this.props.cartItems.data.find(item=>item.id==this.props.id)
+        if(isInCart){
+              console.log("Item already in cart");
+              this.setState({isAdded:true});
+        }
+        else{
+        this.props.addItemToCart({
+            id:this.props.id,
+            problemname: this.props.problemname,
+            price: this.props.price,
+            image: this.props.image,
+            ModelImage: this.props.ModelImage,
+            ModelName: this.props.ModelName
+        })
+        console.log("Item addred successfully");
+      }
+     }
+    render() { 
+        setTimeout(() => {this.setState({isAdded: false})}, 5000)
         const { image, problemname, price,id} = this.props;
         return (
             <CardItem style={{ height: 70, width: 350, justifyContent: 'space-around'}}>
@@ -16,23 +39,29 @@ class ProblemCart extends Component {
                     <Text style={{ paddingLeft: 10, fontStyle: 'italic', color: '#b19cd9' }} >{'\u20B9'}{price}</Text>
                 </View>
                 <Right>
-                    <TouchableOpacity style={styles.btn}
-                        onPress={() => this.props.onPress({
-                            id:id,
-                            problemname: problemname,
-                            price: price,
-                            image: image,
-                            ModelImage: this.props.ModelImage,
-                            ModelName: this.props.ModelName
-                        })}>
-                        <Text style={styles.textstyle} >Add Cart</Text>
-                    </TouchableOpacity>
+                    <TouchableHighlight  style={styles.btn}
+                        onPress={() => this.handle()}>
+                        <Text style={styles.textstyle}> Add Cart</Text>
+                    </TouchableHighlight>
+                   {this.state.isAdded && <Text style={{fontSize:12,color:'red',fontWeight:'bold'}}>*item already in cart</Text>}
+                        
                 </Right>
             </CardItem>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        cartItems: state
+    }
+}
 
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        addItemToCart : (DATA) => dispatch({ type: 'ADD_TO_CART',payload: DATA})
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(ProblemCart);
 const styles = StyleSheet.create({
     image: {
         justifyContent: 'center',
@@ -61,9 +90,10 @@ const styles = StyleSheet.create({
         padding: 5
     },
     textstyle: {
-        fontSize: 18,
+        fontSize: 17,
         color: 'white',
         fontWeight: "bold",
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
-export default ProblemCart;

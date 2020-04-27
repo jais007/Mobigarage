@@ -1,13 +1,31 @@
 import * as React from 'react';
 import {View ,StyleSheet,Image, Dimensions,TouchableOpacity,FlatList,SafeAreaView} from 'react-native';
-import {Icon,Input ,Item,Header,Container,Content,Right,Left} from 'native-base'
+import {Icon,Input ,Item,Header,Container,Content,Right,Left,Button} from 'native-base'
 import {Box,UtilityThemeProvider,Text} from 'react-native-design-utility'
 import Swiper from 'react-native-swiper'
 import BrandCard from '../component/Brandcard';
 import {BRANDS} from '../shared/Goods';
-
+import firebase from '../Config';
+import NavigationService from '../services/NavigationService'
 const NUM_COL=3;
 export default class HomeScreen extends React.Component {
+  state={
+    email:"",
+    name:"",
+  }
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged(user=>{
+        if(user){
+            this.setState({
+                email:user.email,
+                name:user.name,
+            })
+        }
+        else{
+          NavigationService.navigate('Login');
+        }
+    })
+}
   static navigationOptions={
      drawerIcon: () => (
       <Icon name="md-home" size={25} style={{fontSize: 20,paddingTop:5}}/>

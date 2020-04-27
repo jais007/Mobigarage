@@ -10,12 +10,13 @@ class ModelScreen extends Component {
       title: navigation.getParam('Modelname'),
     });
     renderItem = ({ item, index }) => {
-      return (
+        return (
         <Card>
            <ProblemsCard
             ModelName={this.props.navigation.getParam('Modelname', 'NO-ID')}
             ModelImage={this.props.navigation.getParam('ModelImage', 'Image-source')}
-           onPress={this.props.addItemToCart} {...item}/>
+             {...item}/>
+           
         </Card>
           
       )
@@ -46,13 +47,7 @@ class ModelScreen extends Component {
       );
     }
   }
-
-  const mapDispatchToProps = (dispatch) => {
-    return {
-        addItemToCart : (DATA) => dispatch({ type: 'ADD_TO_CART',payload: DATA})
-    }
-  }
-  export default connect(null, mapDispatchToProps)(ModelScreen);
+export default ModelScreen
   const styles = StyleSheet.create({
     image: {
       justifyContent: 'center',
