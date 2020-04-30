@@ -43,7 +43,6 @@ class ProfileScreen extends React.Component {
         Alert.alert(error.message)
     })
    console.log("Mob=", this.state.Mobile, "Name=", this.state.FirstName)
-   
  }
   componentWillUpdate(prevProps) {
     if (prevProps.isFocused !== this.props.isFocused) {

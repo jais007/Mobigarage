@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet,ScrollView,KeyboardAvoidingView} from 'react-native';
-import { Header, Container, Content, Button, Item, Label, Input } from 'native-base';
+import { View, Text, StyleSheet,ScrollView,TouchableOpacity, Alert} from 'react-native';
+import { Item, Label, Input } from 'native-base';
 import firebase from '../Config'
 // create a component
 class NewAddress extends Component {
@@ -16,7 +16,12 @@ class NewAddress extends Component {
         State:"",
         PIN:"",
     }
-    handle(){
+    checkfield(){
+        if(this.state.Name==''||this.state.Mobile||this.state.House_no||this.state.City||this.state.State||this.state.PIN)
+          { Alert.alert("All field are mandatroy")}
+        
+    }
+    handleaddnew(){
         var user = firebase.auth().currentUser;
         firebase.database().ref('Address/' + user.uid).push({
         Name:this.state.Name,
@@ -38,7 +43,7 @@ class NewAddress extends Component {
                     </Item>
                     <Item floatingLabel style={{ borderBottomColor: "#3a455c" }}>
                         <Label>Mobile</Label>
-                        <Input value={this.state.Mobile} onChangeText={(Text) => this.setState({ Mobile: Text })} />
+                        <Input  keyboardType = 'numeric' value={this.state.Mobile} onChangeText={(Text) => this.setState({ Mobile: Text })} />
                     </Item>
                     <Item floatingLabel style={{ borderBottomColor: "#3a455c" }}>
                         <Label>House No</Label>
@@ -54,19 +59,18 @@ class NewAddress extends Component {
                     </Item>
                     <Item floatingLabel style={{ borderBottomColor: "#3a455c" }}>
                         <Label>PIN</Label>
-                        <Input value={this.state.PIN} onChangeText={(Text) => this.setState({ PIN: Text })} />
+                        <Input  keyboardType = 'numeric' value={this.state.PIN} onChangeText={(Text) => this.setState({ PIN: Text })} />
                     </Item>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Button bordered style={{ padding: 30, marginHorizontal:120,marginTop:20, borderRadius: 4,
-                                 justifyContent:'center',alignItems:'center'}}
-                        onPress={() => this.handle()}>
-                        <Text style={{ alignItems: 'center', justifyContent: 'center' }}>Save</Text>
-                    </Button>
+                    <TouchableOpacity style={{backgroundColor:'#33c37d',marginTop:10,paddingHorizontal:20,paddingVertical:10,borderRadius:5}} 
+                    onPress={() => {this.checkfield();this.handleaddnew()}}>
+                <   Text style={{fontWeight:'bold',fontSize:16,color:'#fff'}}>Save </Text>
+                    </TouchableOpacity>
                    </View>
                 </ScrollView>
                 
         );
-    }
+}
 }
 
 // define your styles
@@ -77,6 +81,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
     },
+    
 });
 
 //make this component available to the app

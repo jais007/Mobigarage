@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, TouchableOpacity, FlatList, Alert } from 'react-native';
 import firebase from '../Config'
 import { Box } from 'react-native-design-utility'
 import { Card, CardItem,Button} from 'native-base'
@@ -11,7 +11,7 @@ import NavigationService from '../services/NavigationService';
 // create a component
 class SelectAddress extends Component {
     static navigationOptions = ({ nativation }) => ({
-        title: 'Select Address',
+        title: 'Checkout',
         headerRight: null,
     });
     constructor(props) {
@@ -21,10 +21,11 @@ class SelectAddress extends Component {
             newAddress: "",
             selectedItem:"",
             rerefreshing:false,
+            ButtonStateHolder : true ,
         };
     }
     onPress =(item)=>{
-        this.setState({selectedItem:item});
+        this.setState({selectedItem:item, ButtonStateHolder : false,});
         console.log(this.state.selectedItem)
     }
     renderItem = ({ item, index }) => {
@@ -83,7 +84,7 @@ class SelectAddress extends Component {
         Address:this.state.selectedItem,
         })
         console.log("Order Placed successfully")
-
+        Alert.alert("Booking Placed Successfully")
         this.props.navigation.navigate('Home');
     }
     render() {
@@ -91,6 +92,7 @@ class SelectAddress extends Component {
         const Quantity = navigation.getParam('Quantity', 'itemQuantity');
         const Item = navigation.getParam('Item', 'Item');
         const Amount = navigation.getParam('Amount', 'amount');
+        const opacity = this.state.buttondesible === true ? 0.7 : 1
         return (
             <View style={styles.container}>
                 <Box f={2}>
@@ -101,10 +103,12 @@ class SelectAddress extends Component {
                         extraData={this.state}
                     />
                 </Box>
-                <Button style={styles.bookbtn} 
-                  onPress={() => this.handleBooking(Quantity,Item,Amount)}>
-                    <Text style={styles.textstyle}>Book Now</Text>
-                </Button>
+                <TouchableOpacity style={[styles.bookbtn, { backgroundColor: this.state.ButtonStateHolder ? '#607D8B' : '#33c37d' }]} 
+                activeOpacity = { .5 } 
+                disabled={this.state.ButtonStateHolder}
+                onPress={() => {this.handleBooking(Quantity,Item,Amount);this.props.booked()}}>
+                <Text style={styles.textstyle}>Book Now</Text>
+                 </TouchableOpacity>
             </View>
         );
     }
@@ -119,13 +123,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     bookbtn: {
-        backgroundColor: '#33c37d',
+        // backgroundColor: '#33c37d',
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 20,
         borderRadius: 5,
         paddingVertical: 10,
-        padding: 5
+        padding: 5,
+        marginBottom:15,
     },
     textstyle: {
         fontSize: 18,
@@ -140,4 +145,10 @@ const mapStateToProps = (state) => {
         cartItems: state
     }
 }
-export default connect(mapStateToProps)(SelectAddress);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        booked: (DATA) => dispatch({ type: 'BOOKED', payload: {} })
+    }
+  }
+  
+export default connect(mapStateToProps,mapDispatchToProps)(SelectAddress);

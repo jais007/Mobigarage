@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView,ActivityIndicator} from 'react-native';
 import { Button, Icon, Card, CardItem } from 'native-base';
 import { Box } from 'react-native-design-utility'
-// create a component
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import {withNavigationFocus} from 'react-navigation'
+
 import firebase from '../Config'
 class Address extends Component {
     constructor(props) {
@@ -25,11 +27,17 @@ class Address extends Component {
     renderItem = ({ item, index }) => {
         return (
             <Card>
-                <CardItem style={{ height: 90, width: 330, justifyContent: 'space-between', marginHorizontal:10 }}>
+                <CardItem>
                     <View>
-                        <Text style={{ paddingLeft: 10 }}>{item.Name}</Text>
-                        <Text style={{ paddingLeft: 10 }}>{item.Mobile}</Text>
-                        <Text style={{ paddingLeft: 10 }}>{item.Address}</Text>
+                    <Text style={{fontWeight:'bold',fontSize:14,marginLeft:22}}>{item.Name}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                          <Ionicons name="ios-call" style={{ color: 'blue', fontSize: 16 ,marginHorizontal:5}} />
+                          <Text>{item.Mobile}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', margin: 5 }}>
+                          <FontAwesome name="map-marker" style={{ color: 'blue', fontSize: 16,marginHorizontal:5 }} />
+                          <Text>{item.Address}</Text>
+                        </View>
                     </View>
                 </CardItem>
             </Card>
@@ -60,12 +68,13 @@ class Address extends Component {
                 this.setState({flag:false})
             })
     }
+    
     render() {
         return (
              <View style={styles.container}>
                  {this.state.flag ?
                  <View style={styles.container} >
-                 <ActivityIndicator size="large" color="#d9534f" style={{flex:1,justifyContent:'center',
+                 <ActivityIndicator size="large" color="#3a455c" style={{flex:1,justifyContent:'center',
                    alignItems:'center'}}/>
                   </View> 
                   :
@@ -87,15 +96,11 @@ class Address extends Component {
     }
 }
 
-// define your styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         backgroundColor: '#fff',
     },
 });
 
-//make this component available to the app
 export default Address;

@@ -11,7 +11,7 @@ import { DrawerItems,
 import HomeScreen from './app/screen/HomeScreen';
 import ProfileScreen from './app/screen/ProfileScreen';
 import Orders from './app/screen/Orders';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons ,FontAwesome,FontAwesome5} from '@expo/vector-icons';
 import Logout from './app/screen/Logout';
 import EditProfile from './app/screen/EditProfile'
 import {Box} from 'react-native-design-utility'
@@ -51,11 +51,9 @@ class WelcomeScreen extends Component {
   }
 }
 
-
 const ProfileStack=createStackNavigator({
   Profile:{
       screen:ProfileScreen,
-
       navigationOptions:({navigation})=>{
       return {
         ...profileheader,
@@ -128,6 +126,9 @@ const CustomDrawerContentComponent=(props)=>(
             <View style={styles.iconcontainer}>
                 <Icon name='md-person' style={{fontSize:64,color:'#3a455c'}}/>
             </View>
+            <View>
+
+            </View>
         </View>
       </Header>
       <Content>
@@ -183,11 +184,11 @@ const AppDrawerNavigator=createDrawerNavigator ({
     navigationOptions: {
       drawerLabel: 'Logout',
       drawerIcon: () =><Ionicons name="ios-power"  size={25} style={{fontSize: 20,paddingTop:5}}/>
-      
     }
   },
 },{
     initialRouteName:'Home',
+    // contentComponent: (props) => <CustomDrawerContentComponent /> 
     contentComponent:(
       CustomDrawerContentComponent
     )
@@ -203,17 +204,20 @@ const AppSwitchNavigator=createSwitchNavigator({
 
 export default class ShoppingCart extends Component {
   state={
-    email:"",
-    name:"",
-    password:""
+    Email:"",
+    Name:"",
+    Password:""
   }
   componentDidMount(){
     firebase.auth().onAuthStateChanged(user=>{
         if(user){
             this.setState({
-                email:user.email,
-                name:user.name
+                Email:user.Email,
+                Name:user.Name
             })
+        }
+        else{
+
         }
       
     })

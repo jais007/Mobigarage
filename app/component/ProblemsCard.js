@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     textstyle: {
-        fontSize: 17,
+        fontSize: 15,
         color: 'white',
         fontWeight: "bold",
         alignItems: 'center',

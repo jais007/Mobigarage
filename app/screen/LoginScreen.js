@@ -24,7 +24,7 @@ export default class LoginScreen extends Component {
         firebase.auth().signInWithEmailAndPassword(Email,Password)
         .then(()=>{
             this.setState({flag:false}),
-            this.props.navigation.navigate("Dashboard");
+            this.props.navigation.navigate('Dashboard', { Email: this.state.Email });
         })
         .catch(error=>{
             this.setState({flag:false}),

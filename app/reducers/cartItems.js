@@ -13,6 +13,10 @@ const cartItems = (state = initialState, action) => {
             let remove=state.data.find(item=>item.id==action.payload.id)
             let newdata=state.data.filter((cartItem )=> cartItem.id != action.payload.id)
             return {...state,data:newdata,totalPrice:state.totalPrice-parseInt(remove.price)}
+        case 'USER_LOGOUT':
+            return initialState
+        case 'BOOKED':
+            return initialState
     }
     return state
 }

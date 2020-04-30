@@ -10,7 +10,7 @@ class EditProfile extends React.Component {
         this.state = {
             FirstName: "",
             LastName:"",
-            Mobile: "",
+            Mobile: 0,
             flag: false,
         };
     }
@@ -18,6 +18,7 @@ class EditProfile extends React.Component {
         title: 'Edit Profile',
     });
     updateProfile() {
+
         this.setState({ flag: true })
         var user = firebase.auth().currentUser;
         firebase.database().ref('users/' + user.uid).set({
@@ -42,7 +43,7 @@ class EditProfile extends React.Component {
                     </Item>
                     <Item floatingLabel style={{ borderBottomColor: "#3a455c" }}>
                         <Label>Mobile</Label>
-                        <Input value={this.state.Mobile} onChangeText={(Text) => this.setState({ Mobile: Text })} />
+                        <Input  keyboardType = 'numeric' value={this.state.Mobile} onChangeText={(Text) => this.setState({ Mobile: Text })} />
                     </Item>
                   
                 </Content>
